@@ -14,6 +14,7 @@ export default function TraduccionAutomatica({ idiomaDestinoForzar, idiomaOrigen
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState(null);
   const [frase, setFrase] = useState(fraseOriginal);
+  const [copiado, setCopiado] = useState(false);
 
   // Determinar idiomas a usar
   const idiomaOrig = idiomaOrigenForzar || idiomaOrigen;
@@ -212,7 +213,22 @@ export default function TraduccionAutomatica({ idiomaDestinoForzar, idiomaOrigen
       ) : error ? (
         <p className="error-traduccion">{error}</p>
       ) : (
-        <p>{fraseTraducida}</p>
+        <div style={{display: 'flex', alignItems: 'center', gap: 8}}>
+          <p style={{margin: 0, flex: 1}}>{fraseTraducida}</p>
+          {fraseTraducida && (
+            <button
+              onClick={async () => {
+                await navigator.clipboard.writeText(fraseTraducida);
+                setCopiado(true);
+                setTimeout(() => setCopiado(false), 1200);
+              }}
+              style={{background: '#5B7B93', color: '#fff', border: 'none', borderRadius: 8, padding: '0.3rem 0.8rem', fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer'}}
+              title="Copiar traducción"
+            >
+              {copiado ? '¡Copiado!' : 'Copiar'}
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
