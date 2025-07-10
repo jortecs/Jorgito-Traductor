@@ -87,11 +87,18 @@ function App() {
       {vista === 'imagen' && renderVistaImagen()}
       {vista === 'voz' && (
         <>
-          <SelectoresIdioma />
           <FrasesRapidas />
-          <GrabadorVoz />
-          <TraduccionAutomatica />
-          <SintesisVoz />
+          {/* Bloque de texto manual */}
+          <div className="bloque-texto-manual">
+            <GrabadorVoz modo="texto" />
+            <TraduccionAutomatica />
+          </div>
+          {/* Bloque de grabación de voz */}
+          <div className="bloque-voz">
+            <GrabadorVoz modo="voz" />
+            <TraduccionAutomatica />
+            <SintesisVoz />
+          </div>
           <HistorialFrases />
           <UbicacionMaps />
         </>
